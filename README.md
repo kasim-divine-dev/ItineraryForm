@@ -1,67 +1,48 @@
-# ItineraryForm Component
+# Itinerary Maker
 
-## Description
-The `ItineraryForm` component is a React component built using TypeScript, TailwindCSS, and React Hook Form. It allows users to input details for planning a trip, including the destination, start date, end date, and number of persons. The form includes validation to ensure correct input values.
-
-## Features
-- Fully responsive and styled with TailwindCSS
-- Validations using `react-hook-form`
-- Ensures the start date cannot be before today
-- Ensures the end date must be after the start date
-- Limits the date selection to a maximum of two years from today
-- Restricts the number of persons between 1 and 20
-- Displays error messages for incorrect inputs
+The `ItineraryForm` component is a React component built using TypeScript, TailwindCSS, and React Hook Form. It allows users to input details for planning a trip, including the destination, start date, end date, and number of persons. The form includes validation and handles submission via a callback function.
 
 ## Installation
-Ensure you have React and TailwindCSS installed in your project. You also need `react-hook-form` for form handling.
 
 ```sh
-npm install react-hook-form
+npm install itinerary-maker
 ```
 
 ## Usage
-Import and use the `ItineraryForm` component in your React application.
+
+Import and use the `ItineraryForm` component in your React project:
 
 ```tsx
-import React from "react";
-import ItineraryForm, { FormValues } from "./ItineraryForm";
+import ItineraryForm from 'itinerary-maker';
 
-const handleFormSubmit = (data: FormValues) => {
-  console.log("Form Data:", data);
+const onSubmit = (data: any) => {
+  console.log('Received Data:', data);
 };
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <ItineraryForm onSubmit={handleFormSubmit} />
-    </div>
+    <ItineraryForm
+      apiKey="1234"
+      onDataReceived={onSubmit}
+      formDetails={{
+        destination: 'Tokyo',
+        startDate: '2023-01-01',
+        endDate: '2023-01-05',
+        persons: 2
+      }}
+      key={'1234'}
+    />
   );
-};
+}
 
 export default App;
 ```
 
 ## Props
-| Prop Name | Type | Description |
-|-----------|------|-------------|
-| `onSubmit` | `(data: FormValues) => void` | Function to handle form submission |
 
-## Form Fields
-| Field | Type | Validation |
-|-------|------|------------|
-| `destination` | `string` | Required |
-| `startDate` | `string` (date) | Cannot be before today |
-| `endDate` | `string` (date) | Must be after `startDate` |
-| `persons` | `number` | Minimum 1, Maximum 20 |
+| Prop Name       | Type     | Description |
+|----------------|----------|-------------|
+| `apiKey`       | `string` | API Key for authentication (if required). |
+| `onDataReceived` | `(data: any) => void` | Callback function that receives form data upon submission. |
+| `formDetails`  | `{ destination: string, startDate: string, endDate: string, persons: number }` | Initial form details. |
 
-## Validation Rules
-- The `destination` field is required
-- The `startDate` field must be today or later
-- The `endDate` field must be after the `startDate`
-- The `persons` field must be between 1 and 20
-
-## Styling
-The form has a modern black and white theme and is styled using TailwindCSS classes. It provides a smooth and responsive user experience.
-
-## License
-This component is open-source and free to use in any project.
