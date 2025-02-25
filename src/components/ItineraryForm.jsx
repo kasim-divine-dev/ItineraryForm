@@ -1,28 +1,15 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { createItinerary } from "../itinerary";
-// Define Props
-interface ItineraryMakerProps {
-    apiKey: string;
-    formDetails?: FormValues;
-    onDataReceived: (data: any) => void;
-}
 
-// Define FormValues Type
-export interface FormValues {
-    destination: string;
-    startDate: string;
-    endDate: string;
-    persons: number;
-}
 
-const ItineraryMaker: React.FC<ItineraryMakerProps> = ({ apiKey, formDetails, onDataReceived }) => {
+const ItineraryMaker = ({ apiKey, formDetails, onDataReceived }) => {
     const {
         register,
         handleSubmit,
         watch,
         formState: { errors },
-    } = useForm<FormValues>({ defaultValues: formDetails });
+    } = useForm({ defaultValues: formDetails });
 
     const today = new Date().toISOString().split("T")[0];
     const maxDate = new Date();
@@ -32,11 +19,11 @@ const ItineraryMaker: React.FC<ItineraryMakerProps> = ({ apiKey, formDetails, on
     const startDate = watch("startDate");
 
     // Submit Form & Call API
-    const onSubmit = async (data: FormValues) => {
+    const onSubmit = async (data) => {
         try {
             const itinerary = await createItinerary({ ...data, apiKey });
             onDataReceived(itinerary); // Send generated itinerary back to client
-        } catch (error: any) {
+        } catch (error) {
             alert(error.message); // Handle error
         }
     };

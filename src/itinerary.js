@@ -1,17 +1,8 @@
-export interface ItineraryRequest {
-    apiKey: string;
-    destination: string;
-    startDate: string;
-    endDate: string;
-    persons: number;
-}
-
 const allowedApiKeys = ["API_KEY_123", "API_KEY_456"];
-export function validateApiKey(apiKey: string): boolean {
+export function validateApiKey(apiKey) {
     return allowedApiKeys.includes(apiKey);
 }
-
-export async function generateItinerary(request: ItineraryRequest) {
+export async function generateItinerary(request) {
     return {
         destination: request.destination,
         startDate: request.startDate,
@@ -25,11 +16,9 @@ export async function generateItinerary(request: ItineraryRequest) {
         ],
     };
 }
-
-export async function createItinerary(request: ItineraryRequest) {
+export async function createItinerary(request) {
     if (!validateApiKey(request.apiKey)) {
         throw new Error("Invalid API Key");
     }
-
     return await generateItinerary(request);
 }

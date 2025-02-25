@@ -2,7 +2,7 @@ import ItineraryForm from './components/ItineraryForm'
 
 const App = () => {
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data) => {
     console.log('itinerary data', data)
   }
 
