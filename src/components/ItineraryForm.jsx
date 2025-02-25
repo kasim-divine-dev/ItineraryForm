@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { createItinerary } from "../itinerary";
+import { createItinerary } from "./itinerary";
 
 
 const ItineraryMaker = ({ apiKey, formDetails, onDataReceived }) => {
