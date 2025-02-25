@@ -1,18 +1,24 @@
 {
-  "name": "itinary-maker",
-  "private": true,
-  "version": "0.0.0",
+  "name": "itinerary-maker",
+  "version": "1.0.1",
+  "description": "A React component for trip planning",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
   "type": "module",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.8",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "tailwindcss": "^4.0.8"
   },
@@ -28,5 +34,16 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
-  }
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kasim-divine-dev/ItineraryForm"
+  },
+  "keywords": ["react", "itinerary", "travel", "planning"],
+  "author": "Kasim Divine",
+  "license": "MIT"
 }
