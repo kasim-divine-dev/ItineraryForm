@@ -20,10 +20,11 @@ yarn add itinerary-maker
 
 - 🌍 Generate complete travel itineraries for any destination
 - 📅 Support for customizable date ranges
-- 👥 Accommodates any number of travelers
+- 👥 Accommodates adults, children, and infants
 - 🔑 API key integration for secure access
 - 📱 Responsive design that works on all devices
-- 📝 Detailed daily plans with activities, locations, and descriptions
+- 📝 Detailed daily plans with a single main activity, meal suggestions, and estimated costs
+- 🎯 Customizable preferences for activities and budget type
 
 ## Quick Start
 
@@ -46,10 +47,19 @@ function App() {
         apiKey="your-api-key-here"
         onDataReceived={handleItineraryData}
         formDetails={{
-          destination: 'Tokyo',
-          startDate: '2023-12-01',
-          endDate: '2023-12-05',
-          persons: 2
+          departureCity: 'New York',
+          arrivalCity: 'Paris',
+          departureDate: '2025-06-10',
+          arrivalDate: '2025-06-20',
+          travelers: {
+            adults: 2,
+            children: 1,
+            infants: 0,
+          },
+          preferences: {
+            activities: ['City sightseeing', 'Historical sites', 'Shopping'],
+            budgetType: 'Mid-range',
+          },
         }}
       />
     </div>
@@ -63,53 +73,66 @@ export default App;
 
 ### `<ItineraryForm>` Props
 
-| Prop | Type | Required | Description |
-|------|------|----------|-------------|
-| `apiKey` | string | Yes | Your API key for authentication |
-| `onDataReceived` | function | Yes | Callback function that receives the generated itinerary data |
-| `formDetails` | object | Yes | Details about the trip (see below) |
-| `key` | string | No | React key for the component (optional) |
+| Prop            | Type     | Required | Description                                  |
+|----------------|---------|----------|----------------------------------------------|
+| apiKey         | string  | Yes      | Your API key for authentication            |
+| onDataReceived | function| Yes      | Callback function that receives itinerary data |
+| formDetails    | object  | Yes      | Details about the trip (see below)         |
+| key            | string  | No       | React key for the component (optional)     |
 
 ### `formDetails` Object
 
-| Property | Type | Required | Description |
-|----------|------|----------|-------------|
-| `destination` | string | Yes | The travel destination |
-| `startDate` | string | Yes | Trip start date in 'YYYY-MM-DD' format |
-| `endDate` | string | Yes | Trip end date in 'YYYY-MM-DD' format |
-| `persons` | number | Yes | Number of travelers |
-| `preferences` | object | No | Optional travel preferences |
+| Property       | Type   | Required | Description                              |
+|---------------|--------|----------|------------------------------------------|
+| departureCity | string | Yes      | The departure city                      |
+| arrivalCity   | string | Yes      | The arrival city (destination)          |
+| departureDate | string | Yes      | Trip start date in 'YYYY-MM-DD' format  |
+| arrivalDate   | string | Yes      | Trip end date in 'YYYY-MM-DD' format    |
+| travelers     | object | Yes      | Number of travelers                     |
+| preferences   | object | Yes      | Travel preferences (activities, budget) |
 
-### `preferences` Object (Optional)
+### `travelers` Object
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `budget` | string | Budget level: 'budget', 'moderate', or 'luxury' |
-| `interests` | string[] | Array of travel interests (e.g., ['food', 'history', 'nature']) |
-| `transportation` | string | Preferred mode of transport: 'public', 'rental', or 'walking' |
+| Property  | Type  | Required | Description        |
+|----------|------|----------|--------------------|
+| adults   | number | Yes     | Number of adults  |
+| children | number | Yes     | Number of children |
+| infants  | number | Yes     | Number of infants |
 
-### Returned Itinerary Data Structure
+### `preferences` Object
 
-The `onDataReceived` callback function receives an object with the following structure:
+| Property   | Type     | Required | Description                                     |
+|------------|---------|----------|-------------------------------------------------|
+| activities | string[] | Yes      | Preferred activities (e.g., sightseeing, shopping) |
+| budgetType | string  | Yes      | Budget type: 'Budget', 'Mid-range', or 'Luxury' |
+
+## Returned Itinerary Data Structure
+
+The `onDataReceived` callback receives an object with the following structure:
 
 ```typescript
 interface ItineraryResult {
-  destination: string;
-  startDate: string;
-  endDate: string;
-  persons: number;
-  days: ItineraryDay[];
-  summary: string;
+  departure_city: string;
+  arrival_city: string;
+  departure_date: string;
+  arrival_date: string;
+  travelers: {
+    adults: number;
+    children: number;
+    infants: number;
+  };
+  budget_type: 'Budget' | 'Mid-range' | 'Luxury';
+  itinerary: ItineraryDay[];
 }
 
 interface ItineraryDay {
+  day: number;
   date: string;
-  activities: {
-    time: string;
-    activity: string;
-    location: string;
-    description: string;
-  }[];
+  activity: string;
+  location: string;
+  meal_suggestions: string[];
+  estimated_cost: number;
+  additional_notes: string;
 }
 ```
 
@@ -122,15 +145,19 @@ interface ItineraryDay {
   apiKey="your-api-key-here"
   onDataReceived={handleItineraryData}
   formDetails={{
-    destination: 'Paris',
-    startDate: '2023-06-15',
-    endDate: '2023-06-20',
-    persons: 2,
+    departureCity: 'New York',
+    arrivalCity: 'Paris',
+    departureDate: '2025-06-10',
+    arrivalDate: '2025-06-20',
+    travelers: {
+      adults: 2,
+      children: 1,
+      infants: 0,
+    },
     preferences: {
-      budget: 'moderate',
-      interests: ['art', 'food', 'history'],
-      transportation: 'public'
-    }
+      activities: ['City sightseeing', 'Historical sites', 'Shopping'],
+      budgetType: 'Mid-range',
+    },
   }}
 />
 ```
@@ -151,38 +178,34 @@ function TripPlanner() {
   return (
     <div>
       <h1>Trip Planner</h1>
-      
       <ItineraryForm
         apiKey="your-api-key-here"
         onDataReceived={handleItineraryData}
         formDetails={{
-          destination: 'Rome',
-          startDate: '2023-09-10',
-          endDate: '2023-09-15',
-          persons: 3
+          departureCity: 'New York',
+          arrivalCity: 'Paris',
+          departureDate: '2025-06-10',
+          arrivalDate: '2025-06-20',
+          travelers: {
+            adults: 2,
+            children: 1,
+            infants: 0,
+          },
+          preferences: {
+            activities: ['City sightseeing', 'Historical sites', 'Shopping'],
+            budgetType: 'Mid-range',
+          },
         }}
       />
-      
-      {itinerary && (
-        <div>
-          <h2>Your {itinerary.days.length}-Day Trip to {itinerary.destination}</h2>
-          <p>{itinerary.summary}</p>
-          
-          {itinerary.days.map((day, index) => (
-            <div key={index}>
-              <h3>Day {index + 1}: {day.date}</h3>
-              <ul>
-                {day.activities.map((activity, actIndex) => (
-                  <li key={actIndex}>
-                    <strong>{activity.time}</strong>: {activity.activity} at {activity.location}
-                    <p>{activity.description}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+      {itinerary && itinerary.itinerary.map((day, index) => (
+        <div key={index}>
+          <h3>Day {day.day}: {day.date}</h3>
+          <p><strong>Activity:</strong> {day.activity}</p>
+          <p><strong>Location:</strong> {day.location}</p>
+          <p><strong>Meal Suggestions:</strong> {day.meal_suggestions.join(', ')}</p>
+          <p><strong>Estimated Cost:</strong> ${day.estimated_cost} per person</p>
         </div>
-      )}
+      ))}
     </div>
   );
 }
@@ -192,37 +215,12 @@ export default TripPlanner;
 
 ## API Key
 
-To obtain an API key, please visit our [developer portal](https://example.com/developer) and register for an account.
-
-## Error Handling
-
-The component will handle various error states internally and display appropriate messages:
-
-- Invalid API key
-- Invalid form details (missing required fields or invalid dates)
-- Network errors
-- API response errors
-
-## TypeScript Support
-
-This package includes TypeScript definitions. Import types as needed:
-
-```typescript
-import ItineraryForm, { FormDetails, ItineraryResult } from 'itinerary-maker';
-```
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- IE11 is not supported
+To obtain an API key, visit our developer portal and register for an account.
 
 ## Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+We welcome contributions! See `CONTRIBUTING.md` for details.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the `LICENSE` file for details.
