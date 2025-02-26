@@ -1,5 +1,5 @@
 {
-  "name": "itinary-maker",
+  "name": "itinerary-maker",
   "version": "1.0.1",
   "description": "A React component for generating travel itineraries",
   "main": "dist/index.js",
