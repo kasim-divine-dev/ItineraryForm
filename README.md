@@ -1,4 +1,4 @@
-# Itinerary Maker
+# Itinerary Generator
 
 A React component library for generating travel itineraries based on user inputs. Perfect for travel applications, booking websites, and trip planning tools.
 
@@ -7,13 +7,13 @@ A React component library for generating travel itineraries based on user inputs
 Install the package using npm:
 
 ```bash
-npm install itinerary-maker
+npm install itinerary-generator
 ```
 
 Or using yarn:
 
 ```bash
-yarn add itinerary-maker
+yarn add itinerary-generator
 ```
 
 ## Features
@@ -32,7 +32,7 @@ yarn add itinerary-maker
 
 ```jsx
 import React from 'react';
-import ItineraryForm from 'itinerary-maker';
+import ItineraryForm from 'itinerary-generator';
 
 function App() {
   const handleItineraryData = (data) => {
@@ -166,7 +166,7 @@ interface ItineraryDay {
 
 ```jsx
 import React, { useState } from 'react';
-import ItineraryForm from 'itinerary-maker';
+import ItineraryForm from 'itinerary-generator';
 
 function TripPlanner() {
   const [itinerary, setItinerary] = useState(null);
