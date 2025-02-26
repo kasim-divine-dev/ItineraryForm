@@ -9,12 +9,12 @@ export const validateApiKey = async (apiKey: string): Promise<boolean> => {
 };
 
 export const validateFormDetails = (details: FormDetails): boolean => {
-    if (!details.destination || !details.startDate || !details.endDate) {
+    if (!details.departureCity || !details.arrivalCity || !details.departureDate || !details.arrivalDate) {
         return false;
     }
 
-    const start = new Date(details.startDate);
-    const end = new Date(details.endDate);
+    const start = new Date(details.departureDate);
+    const end = new Date(details.arrivalDate);
 
     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
         return false;
@@ -24,7 +24,11 @@ export const validateFormDetails = (details: FormDetails): boolean => {
         return false;
     }
 
-    if (!details.persons || details.persons < 1) {
+    if (!details.travelers || details.travelers.adults < 1 || details.travelers.children < 0 || details.travelers.infants < 0) {
+        return false;
+    }
+
+    if (!details.preferences.activities || details.preferences.activities.length === 0) {
         return false;
     }
 

@@ -1,32 +1,41 @@
 export interface FormDetails {
-    destination: string;
-    startDate: string;
-    endDate: string;
-    persons: number;
-    preferences?: {
-        budget?: 'budget' | 'moderate' | 'luxury';
-        interests?: string[];
-        transportation?: 'public' | 'rental' | 'walking';
+    departureCity: string;
+    arrivalCity: string;
+    departureDate: string;
+    arrivalDate: string;
+    travelers: {
+        adults: number;
+        children: number;
+        infants: number;
+    };
+    preferences: {
+        activities: string[];
+        budgetType: 'Budget' | 'Mid-range' | 'Luxury';
     };
 }
 
 export interface ItineraryDay {
+    day: number;
     date: string;
-    activities: {
-        time: string;
-        activity: string;
-        location: string;
-        description: string;
-    }[];
+    activity: string;
+    location: string;
+    meal_suggestions: string[];
+    estimated_cost: number;
+    additional_notes: string;
 }
 
 export interface ItineraryResult {
-    destination: string;
-    startDate: string;
-    endDate: string;
-    persons: number;
-    days: ItineraryDay[];
-    summary: string;
+    departure_city: string;
+    arrival_city: string;
+    departure_date: string;
+    arrival_date: string;
+    travelers: {
+        adults: number;
+        children: number;
+        infants: number;
+    };
+    budget_type: 'Budget' | 'Mid-range' | 'Luxury';
+    itinerary: ItineraryDay[];
 }
 
 export interface ItineraryFormProps {
