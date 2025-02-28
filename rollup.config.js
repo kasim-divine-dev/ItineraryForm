@@ -3,6 +3,7 @@ import typescript from 'rollup-plugin-typescript2';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { readFileSync } from 'fs';
+import json from '@rollup/plugin-json';
 
 const pkg = JSON.parse(
     readFileSync(new URL('./package.json', import.meta.url), 'utf8')
@@ -27,6 +28,7 @@ export default {
     plugins: [
         nodeResolve(),
         commonjs(),
+        json(),
         typescript({
             useTsconfigDeclarationDir: true,
         }),
