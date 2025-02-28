@@ -17,12 +17,14 @@ export default {
             format: 'cjs',
             exports: 'named',
             sourcemap: true,
+            inlineDynamicImports: true, // Add this line
         },
         {
             file: pkg.module,
             format: 'es',
             exports: 'named',
             sourcemap: true,
+            inlineDynamicImports: true, // Add this line
         },
     ],
     plugins: [
