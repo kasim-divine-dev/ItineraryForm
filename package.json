@@ -1,6 +1,6 @@
 {
   "name": "itinerary-generator",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A React component for generating travel itineraries",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
