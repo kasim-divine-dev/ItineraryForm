@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { ItineraryFormProps } from '../types';
-import { generateItinerary } from '../utils/itineraryProcessor';
 import { validateApiKey, validateFormDetails } from '../utils/validators';
 import { generateItineraryFromAi } from './generateItineararyFromAi';
 
