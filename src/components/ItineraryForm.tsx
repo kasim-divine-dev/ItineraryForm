@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ItineraryFormProps } from '../types';
 import { generateItinerary } from '../utils/itineraryProcessor';
 import { validateApiKey, validateFormDetails } from '../utils/validators';
+import { generateItineraryFromAi } from './generateItineararyFromAi';
 
 const ItineraryForm: React.FC<ItineraryFormProps> = ({
     apiKey,
@@ -18,7 +19,6 @@ const ItineraryForm: React.FC<ItineraryFormProps> = ({
             setError(null);
 
             try {
-                // Validate API key
                 const isApiKeyValid = await validateApiKey(apiKey);
                 if (!isApiKeyValid) {
                     setError('Invalid API key');
@@ -26,7 +26,6 @@ const ItineraryForm: React.FC<ItineraryFormProps> = ({
                     return;
                 }
 
-                // Validate form details
                 if (!validateFormDetails(formDetails)) {
                     setError('Invalid form details');
                     setIsLoading(false);
@@ -35,10 +34,8 @@ const ItineraryForm: React.FC<ItineraryFormProps> = ({
 
                 setIsValid(true);
 
-                // Generate itinerary
-                const itinerary = await generateItinerary(apiKey, formDetails);
+                const itinerary = await generateItineraryFromAi(formDetails);
 
-                // Pass the data to the parent component
                 onDataReceived(itinerary);
 
             } catch (err) {
