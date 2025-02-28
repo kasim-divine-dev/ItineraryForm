@@ -35,5 +35,5 @@ export default {
             useTsconfigDeclarationDir: true,
         }),
     ],
-    external: ['react', 'react-dom'],
+    external: ['react', 'react-dom', 'cohere-ai', 'formdata-node'],
 };
