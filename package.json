@@ -25,7 +25,13 @@
     "react",
     "itinerary",
     "travel",
-    "component"
+    "component",
+    "itinerary generator",
+    "trip planner",
+    "trip planner react",
+    "trip planner react component",
+    "trip planner react component",
+    "Ai itinerary generator"
   ],
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.2",
