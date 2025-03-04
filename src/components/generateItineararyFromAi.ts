@@ -59,6 +59,7 @@ export const generateItineraryFromAi = async (formDetails: FormDetails) => {
         \`\`\`
 
         plzz make sure the image is working in real and url is valid
+        is possible get images from unsplash , pexel , or any ohter image site platform becuase wikipedia is not working
 
         `;
 
