@@ -49,6 +49,7 @@ export const generateItineraryFromAi = async (formDetails: FormDetails) => {
                 "date": "YYYY-MM-DD",
                 "activity": "Main activity for the day",
                 "location": "Activity location",
+                                "images":["image_url_1", "image_url_2"], // a real image url of that place from internet
                 "meal_suggestions": ["Local dish 1", "Local dish 2"],
                 "estimated_cost": "Estimated cost per person",
                 "additional_notes": "Any useful travel tips"
